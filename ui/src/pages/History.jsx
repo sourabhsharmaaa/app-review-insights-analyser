@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import PulsePreview from '../components/PulsePreview'
+import BASE from '../api'
 
 export default function History() {
   const [weeks, setWeeks] = useState([])
@@ -9,7 +10,7 @@ export default function History() {
   const [loadingPulse, setLoadingPulse] = useState(false)
 
   useEffect(() => {
-    fetch('/api/weeks')
+    fetch(`${BASE}/api/weeks`)
       .then(r => r.json())
       .then(data => { setWeeks(data); setLoading(false) })
       .catch(() => setLoading(false))
@@ -19,7 +20,7 @@ export default function History() {
     setSelected(weekLabel)
     setPulse(null)
     setLoadingPulse(true)
-    const res = await fetch(`/api/pulse/${weekLabel}`)
+    const res = await fetch(`${BASE}/api/pulse/${weekLabel}`)
     const data = await res.json()
     setPulse(data)
     setLoadingPulse(false)

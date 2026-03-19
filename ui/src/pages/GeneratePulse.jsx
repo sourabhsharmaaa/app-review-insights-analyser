@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import ProgressTracker from '../components/ProgressTracker'
 import PulsePreview from '../components/PulsePreview'
+import BASE from '../api'
 
 export default function GeneratePulse() {
   const [weeksBack, setWeeksBack]         = useState(12)
@@ -26,7 +27,7 @@ export default function GeneratePulse() {
     setPct(0)
     setRunning(true)
 
-    const url = `/api/run?weeks_back=${weeksBack}&force=${forceRun}&max_reviews=${maxReviews}`
+    const url = `${BASE}/api/run?weeks_back=${weeksBack}&force=${forceRun}&max_reviews=${maxReviews}`
     const es  = new EventSource(url, { withCredentials: false })
     sourceRef.current = es
 
@@ -69,7 +70,7 @@ export default function GeneratePulse() {
     setPublishResult(null)
 
     try {
-      const res  = await fetch(`/api/publish/${pulse.week_label}`, { method: 'POST' })
+      const res  = await fetch(`${BASE}/api/publish/${pulse.week_label}`, { method: 'POST' })
       const data = await res.json()
 
       if (res.ok) {
