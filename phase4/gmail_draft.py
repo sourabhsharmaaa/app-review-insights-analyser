@@ -231,5 +231,5 @@ def create_gmail_draft(combined: Any) -> str:
         return sent_url
 
     except Exception as exc:
-        logger.warning("Gmail draft creation failed (non-fatal): %s", exc)
+        logger.error("Gmail send failed: %s", exc, exc_info=True)
         return ""
