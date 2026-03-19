@@ -214,7 +214,11 @@ def publish_report(week_label: str):
             detail=f"No combined report for {week_label}. Run the pipeline first."
         )
 
-    result = publish(combined)
+    try:
+        result = publish(combined)
+    except Exception as exc:
+        logger.exception("Publish failed for %s: %s", week_label, exc)
+        raise HTTPException(status_code=500, detail=str(exc))
 
     return {
         "status":     "published",
@@ -222,4 +226,8 @@ def publish_report(week_label: str):
         "gdoc_url":   result.gdoc_url,
         "draft_url":  result.draft_url,
         "via_mcp":    result.via_mcp,
+        "errors":     {
+            "gdoc":  "skipped — check GDOC_DOC_ID / service account" if not result.gdoc_url else None,
+            "email": "skipped — check EMAIL_TO / gmail token" if not result.draft_url else None,
+        }
     }
