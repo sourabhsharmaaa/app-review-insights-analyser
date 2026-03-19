@@ -1,14 +1,14 @@
 # Scraping (Phase 1)
-google-play-scraper==1.2.7
+google-play-scraper>=1.2.7
 
 # LLM
-groq==0.11.0
+groq>=0.11.0
 
 # Config
-python-dotenv==1.0.1
+python-dotenv>=1.1.0
 
 # Data validation
-pydantic==2.7.1
+pydantic>=2.7.1
 
 # PII detection (Phase 2)
 # spacy/presidio only needed for SCRUB_MODE=presidio (not used in production)
@@ -16,32 +16,32 @@ pydantic==2.7.1
 
 # Fee scraping (Phase 4A)
 httpx>=0.28.1,<1.0.0
-beautifulsoup4==4.12.3
+beautifulsoup4>=4.12.3
 
 # Email templating (Phase 4)
-jinja2==3.1.4
+jinja2>=3.1.4
 
 # Google APIs (Phase 4B-4D)
-google-api-python-client==2.134.0
-google-auth-httplib2==0.2.0
-google-auth-oauthlib==1.2.1
+google-api-python-client>=2.134.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.2.1
 
 # MCP Server (Phase 4)
-fastmcp==2.3.4
+fastmcp>=2.3.4
 
 # Web backend (Phase 5)
-fastapi==0.111.0
-uvicorn[standard]==0.30.1
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.1
 
 # Resilience
-tenacity==8.3.0
+tenacity>=8.3.0
 
 # CLI
-click==8.1.7
+click>=8.1.7
 
 # Scheduler
-apscheduler==3.10.4
+apscheduler>=3.10.4
 
 # Testing
-pytest==8.2.2
-pytest-mock==3.14.0
+pytest>=8.2.2
+pytest-mock>=3.14.0
