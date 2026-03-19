@@ -191,15 +191,15 @@ def create_gmail_draft(combined: Any) -> str:
     secret_path = os.path.expanduser(
         os.getenv("GMAIL_CLIENT_SECRET", "~/.groww/gmail_client_secret.json")
     )
-    logger.info("Gmail secret_path=%s exists=%s", secret_path, os.path.exists(secret_path))
+    print(f"[GMAIL DEBUG] secret_path={secret_path} exists={os.path.exists(secret_path)}", flush=True)
     if not os.path.exists(secret_path):
-        logger.warning("GMAIL_CLIENT_SECRET not found at %s — skipping Gmail", secret_path)
+        print(f"[GMAIL DEBUG] GMAIL_CLIENT_SECRET not found at {secret_path} — skipping", flush=True)
         return ""
 
     email_to = os.getenv("EMAIL_TO", "")
-    logger.info("Gmail EMAIL_TO=%r", email_to)
+    print(f"[GMAIL DEBUG] EMAIL_TO={email_to!r}", flush=True)
     if not email_to:
-        logger.warning("EMAIL_TO not set — skipping Gmail draft")
+        print("[GMAIL DEBUG] EMAIL_TO not set — skipping", flush=True)
         return ""
 
     try:

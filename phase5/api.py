@@ -33,13 +33,17 @@ _LOG_DIR = _ROOT / "data" / "logs"
 _LOG_DIR.mkdir(parents=True, exist_ok=True)
 _LOG_FILE = _LOG_DIR / "api.log"
 
-_file_handler = logging.FileHandler(_LOG_FILE, encoding="utf-8")
-_file_handler.setFormatter(logging.Formatter(
+_formatter = logging.Formatter(
     "%(asctime)s %(levelname)-8s %(name)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-))
+)
+_file_handler = logging.FileHandler(_LOG_FILE, encoding="utf-8")
+_file_handler.setFormatter(_formatter)
+_stream_handler = logging.StreamHandler()  # stdout — captured by Render
+_stream_handler.setFormatter(_formatter)
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger().addHandler(_file_handler)
+logging.getLogger().addHandler(_stream_handler)
 # also keep uvicorn + httpx logs going to the file
 for _name in ("uvicorn", "uvicorn.access", "uvicorn.error", "httpx"):
     logging.getLogger(_name).addHandler(_file_handler)
