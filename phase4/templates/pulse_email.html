@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GROWW Weekly Pulse | {{ pulse.week_label }}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f6f8;font-family:Arial,Helvetica,sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f6f8;padding:24px 0;">
+    <tr>
+      <td align="center">
+
+        <!-- Outer container -->
+        <table width="600" cellpadding="0" cellspacing="0" border="0"
+               style="background-color:#ffffff;border-radius:8px;overflow:hidden;
+                      box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+          <!-- ── HEADER ──────────────────────────────────────── -->
+          <tr>
+            <td style="background-color:#00b386;padding:28px 32px;">
+              <p style="margin:0;font-size:11px;color:#d0f5ec;letter-spacing:1px;
+                         text-transform:uppercase;">Weekly Product Health Pulse</p>
+              <h1 style="margin:6px 0 0;font-size:22px;color:#ffffff;">
+                GROWW &nbsp;|&nbsp; {{ pulse.week_label }}
+              </h1>
+              <!-- Summary metrics row -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;width:100%;">
+                <tr>
+                  <td style="color:#ffffff;font-size:14px;">
+                    <strong>{{ pulse.total_reviews_analysed }}</strong>
+                    <span style="opacity:0.8;"> reviews analysed</span>
+                  </td>
+                  <td align="right" style="color:#ffffff;font-size:14px;">
+                    Avg rating &nbsp;
+                    <strong style="font-size:18px;">{{ "%.1f"|format(pulse.avg_rating) }} ★</strong>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── TOP THEMES ──────────────────────────────────── -->
+          <tr>
+            <td style="padding:28px 32px 8px;">
+              <h2 style="margin:0 0 16px;font-size:14px;color:#374151;
+                          text-transform:uppercase;letter-spacing:0.8px;
+                          border-bottom:2px solid #e5e7eb;padding-bottom:8px;">
+                Top Themes
+              </h2>
+
+              {% for theme in pulse.top_themes %}
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:20px;border-left:4px solid #00b386;
+                            padding-left:12px;">
+                <tr>
+                  <td>
+                    <!-- Theme name + stats -->
+                    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+                      <tr>
+                        <td style="font-size:15px;font-weight:bold;color:#111827;">
+                          {{ loop.index }}. {{ theme.label }}
+                        </td>
+                        <td align="right" style="font-size:12px;color:#6b7280;white-space:nowrap;">
+                          {{ theme.review_count }} reviews &nbsp;·&nbsp;
+                          {{ "%.1f"|format(theme.avg_rating) }}★ &nbsp;·&nbsp;
+                          {{ "%.0f"|format(theme.pct_of_total) }}%
+                        </td>
+                      </tr>
+                    </table>
+                    <!-- Progress bar -->
+                    <table cellpadding="0" cellspacing="0" border="0"
+                           style="width:100%;margin:6px 0 8px;">
+                      <tr>
+                        <td style="background-color:#e5e7eb;border-radius:4px;height:6px;width:100%;">
+                          <div style="background-color:#00b386;border-radius:4px;height:6px;
+                                      width:{{ [theme.pct_of_total, 100]|min|int }}%;">&nbsp;</div>
+                        </td>
+                      </tr>
+                    </table>
+                    <!-- Summary line -->
+                    <p style="margin:0;font-size:13px;color:#4b5563;font-style:italic;">
+                      "{{ theme.one_line_summary }}"
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              {% endfor %}
+
+            </td>
+          </tr>
+
+          <!-- ── USER QUOTES ─────────────────────────────────── -->
+          <tr>
+            <td style="padding:8px 32px 8px;">
+              <h2 style="margin:0 0 16px;font-size:14px;color:#374151;
+                          text-transform:uppercase;letter-spacing:0.8px;
+                          border-bottom:2px solid #e5e7eb;padding-bottom:8px;">
+                What Users Are Saying
+              </h2>
+
+              {% for quote in pulse.user_quotes %}
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:12px;background-color:#f9fafb;
+                            border-radius:6px;">
+                <tr>
+                  <td style="padding:14px 16px;font-size:13px;color:#374151;
+                              line-height:1.5;font-style:italic;">
+                    &#x275D;&nbsp;{{ quote }}&nbsp;&#x275E;
+                  </td>
+                </tr>
+              </table>
+              {% endfor %}
+
+            </td>
+          </tr>
+
+          <!-- ── ACTION IDEAS ────────────────────────────────── -->
+          <tr>
+            <td style="padding:8px 32px 28px;">
+              <h2 style="margin:0 0 16px;font-size:14px;color:#374151;
+                          text-transform:uppercase;letter-spacing:0.8px;
+                          border-bottom:2px solid #e5e7eb;padding-bottom:8px;">
+                Action Ideas
+              </h2>
+
+              <ol style="margin:0;padding-left:20px;">
+                {% for idea in pulse.action_ideas %}
+                <li style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:10px;">
+                  {{ idea }}
+                </li>
+                {% endfor %}
+              </ol>
+
+            </td>
+          </tr>
+
+          <!-- ── FEE EXPLANATION ──────────────────────────────── -->
+          {% if fee_scenario %}
+          <tr>
+            <td style="padding:8px 32px 20px;border-top:1px solid #e5e7eb;">
+              <h2 style="margin:0 0 12px;font-size:14px;color:#374151;
+                          text-transform:uppercase;letter-spacing:0.8px;
+                          border-bottom:2px solid #e5e7eb;padding-bottom:8px;">
+                Fee Explanation: {{ fee_scenario }}
+              </h2>
+              <ul style="margin:0;padding-left:20px;">
+                {% for bullet in fee_bullets %}
+                <li style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px;">{{ bullet }}</li>
+                {% endfor %}
+              </ul>
+              <p style="margin:12px 0 4px;font-size:12px;color:#6b7280;">Sources:</p>
+              {% for link in fee_sources %}
+              <a href="{{ link }}" style="color:#00b386;font-size:12px;display:block;margin-bottom:4px;">{{ link }}</a>
+              {% endfor %}
+              <p style="margin:8px 0 0;font-size:11px;color:#9ca3af;">Last checked: {{ fee_last_checked }}</p>
+            </td>
+          </tr>
+          {% endif %}
+
+          <!-- ── FOOTER ──────────────────────────────────────── -->
+          <tr>
+            <td style="background-color:#f9fafb;border-top:1px solid #e5e7eb;
+                        padding:14px 32px;">
+              <p style="margin:0;font-size:11px;color:#9ca3af;text-align:center;">
+                Generated {{ generated_at }} &nbsp;·&nbsp; GROWW Weekly Pulse Pipeline
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Outer container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

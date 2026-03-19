@@ -1,0 +1,43 @@
+# Environment
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.venv311/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Data — never commit scraped reviews or generated reports
+data/raw/
+data/processed/
+data/reports/
+data/logs/
+
+# Google credentials — never commit
+*.json
+!package.json
+!package-lock.json
+
+# Node
+node_modules/
+ui/node_modules/
+
+# Vite build output
+ui/dist/
+
+# macOS
+.DS_Store
+
+# Claude worktrees
+.claude/worktrees/
+
+# pytest
+.pytest_cache/
+htmlcov/
+.coverage

@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: groww-pulse-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_lg
+    startCommand: uvicorn phase5.api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: APP_ID
+        value: com.nextbillion.groww
+      - key: WEEKS_BACK
+        value: "12"
+      - key: MAX_REVIEWS
+        value: "500"
+      - key: MIN_REVIEW_WORDS
+        value: "5"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: SCRUB_MODE
+        value: regex
+      - key: FEE_FUND_URL
+        value: https://groww.in/p/exit-load-in-mutual-funds
+      - key: GDOC_DOC_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON
+        value: /etc/secrets/service_account.json
+      - key: GMAIL_CLIENT_SECRET
+        value: /etc/secrets/gmail_client_secret.json
+      - key: GMAIL_TOKEN_PATH
+        value: /etc/secrets/gmail_token.json
+      - key: EMAIL_TO
+        sync: false
+      - key: USE_MCP
+        value: "false"
