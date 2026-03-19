@@ -27,7 +27,7 @@ google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.1
 
 # MCP Server (Phase 4)
-fastmcp==0.1.7
+fastmcp==2.3.4
 
 # Web backend (Phase 5)
 fastapi==0.111.0
