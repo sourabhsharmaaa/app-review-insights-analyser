@@ -73,6 +73,11 @@ def _sse(event: str, data: dict) -> str:
 
 # ── Routes ───────────────────────────────────────────────────────────────────
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 @app.get("/api/weeks")
 def get_weeks():
     """Return all weeks that have a cached pulse report."""
