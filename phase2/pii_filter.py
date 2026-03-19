@@ -6,7 +6,7 @@ processor/pii_filter.py imports from here.
 
 Two modes controlled by SCRUB_MODE env var:
   "regex"    (default) — fast, no extra deps, handles Indian phone/PAN/Aadhaar/email
-  "presidio" — Presidio + spaCy en_core_web_lg for named-entity detection;
+  "presidio" — Presidio + spaCy en_core_web_sm for named-entity detection;
                regex is always applied on top for Indian-specific patterns
 
 Layer 1 (structural) : userName never modelled — enforced in scraper/models.py

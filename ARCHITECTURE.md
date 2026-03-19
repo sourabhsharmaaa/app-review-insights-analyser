@@ -25,7 +25,7 @@ GROWW is an Indian investment/stock app. Product, Support, and Leadership teams 
 | Language | Python 3.11+ |
 | LLM | Groq API (`llama-3.3-70b-versatile`) |
 | Review Source | `google-play-scraper` (unofficial Play Store scraper) |
-| PII Filtering | `presidio-analyzer` + `presidio-anonymizer` + `spacy en_core_web_lg` |
+| PII Filtering | `presidio-analyzer` + `presidio-anonymizer` + `spacy en_core_web_sm` |
 | Data Validation | `pydantic` v2 |
 | Email Dispatch | Gmail API (`google-api-python-client`) — creates draft, no auto-send |
 | **Web UI** | **React** (Vite, real-time SSE progress, internal dashboard) |
@@ -311,7 +311,7 @@ python main.py scrape --weeks-back 10
 ### `processor/pii_filter.py`
 
 - `scrub_review(review: Review) -> Review`
-- Initialises `AnalyzerEngine` with `en_core_web_lg` NLP model
+- Initialises `AnalyzerEngine` with `en_core_web_sm` NLP model
 - Detects: `PERSON`, `PHONE_NUMBER`, `EMAIL_ADDRESS`, `LOCATION`, `IN_PAN`, `IN_AADHAAR`
 - Replaces with typed tokens via `AnonymizerEngine`:
   - `Rahul` → `<PERSON>`
@@ -1075,7 +1075,7 @@ pydantic==2.7.1
 presidio-analyzer==2.2.354
 presidio-anonymizer==2.2.354
 spacy==3.7.4
-# After install: python -m spacy download en_core_web_lg
+# After install: python -m spacy download en_core_web_sm
 
 # Email templating
 jinja2==3.1.4
@@ -1100,7 +1100,7 @@ pytest-mock==3.14.0
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m spacy download en_core_web_lg
+python -m spacy download en_core_web_sm
 cp .env.example .env
 # Fill in GROQ_API_KEY and email credentials
 

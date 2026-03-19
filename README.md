@@ -77,7 +77,7 @@ The pipeline runs in 6 phases, each with a clear single responsibility.
 | Language | Python 3.11+ |
 | LLM | Groq API (`llama-3.3-70b-versatile`) |
 | Review Source | `google-play-scraper` |
-| PII Filtering | `presidio-analyzer` + `presidio-anonymizer` + `spacy en_core_web_lg` |
+| PII Filtering | `presidio-analyzer` + `presidio-anonymizer` + `spacy en_core_web_sm` |
 | Fee Scraping | `httpx` + `beautifulsoup4` |
 | Google Docs | `google-api-python-client` (Service Account) |
 | Gmail | `google-api-python-client` (OAuth2) |
@@ -169,7 +169,7 @@ source .venv311/bin/activate
 ### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
-python -m spacy download en_core_web_lg
+python -m spacy download en_core_web_sm
 ```
 
 ### 3. Environment variables

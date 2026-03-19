@@ -31,7 +31,7 @@ class Settings:
 
     # ── Optional ──────────────────────────────────────────────────────────────
     log_level: str = "INFO"
-    scrub_mode: str = "regex"       # "presidio" requires spaCy en_core_web_lg
+    scrub_mode: str = "regex"       # "presidio" requires spaCy en_core_web_sm
 
     @classmethod
     def from_env(cls) -> "Settings":

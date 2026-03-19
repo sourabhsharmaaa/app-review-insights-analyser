@@ -2,7 +2,7 @@ services:
   - type: web
     name: groww-pulse-api
     runtime: python
-    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_lg
+    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_sm
     startCommand: uvicorn phase5.api:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: GROQ_API_KEY
