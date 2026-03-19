@@ -46,7 +46,7 @@ The pipeline runs in 6 phases, each with a clear single responsibility.
 - Merges `PulseNote` + `FeeExplanation` into a `CombinedReport` JSON
 - **Approval-gated**: user clicks **Publish** in UI to trigger:
   - Append to Google Doc (via Service Account — rich text, coloured headers)
-  - Create Gmail Draft (via OAuth2 — never auto-sends)
+  - Send email directly to `EMAIL_TO` (via Gmail API OAuth2)
 
 ### 6. React UI (Phase 5)
 - **New Pulse page**: configure weeks, max reviews, run pipeline with live SSE progress
@@ -80,7 +80,7 @@ The pipeline runs in 6 phases, each with a clear single responsibility.
 | PII Filtering | `presidio-analyzer` + `presidio-anonymizer` + `spacy en_core_web_lg` |
 | Fee Scraping | `httpx` + `beautifulsoup4` |
 | Google Docs | `google-api-python-client` (Service Account) |
-| Gmail Draft | `google-api-python-client` (OAuth2) |
+| Gmail | `google-api-python-client` (OAuth2) |
 | MCP Server | `fastmcp` |
 | Frontend | React + Vite (SSE, real-time progress) |
 | Backend | FastAPI (SSE `/api/run`, `/api/publish`) |
@@ -121,7 +121,7 @@ app-review-insights-analyser/
 │   ├── fee_scraper.py            # Scrape exit load → ≤6 bullets + 2 source links
 │   ├── combined.py               # Merge PulseNote + FeeExplanation → CombinedReport
 │   ├── gdoc_reporter.py          # Append to Google Doc (rich text, replace-on-duplicate)
-│   ├── gmail_draft.py            # Create Gmail Draft — never auto-sends
+│   ├── gmail_draft.py            # Send email via Gmail API (OAuth2)
 │   ├── publisher.py              # Facade: routes to MCP or Direct API (USE_MCP toggle)
 │   ├── mcp_server.py             # Custom MCP server (3 tools — local learning)
 │   └── templates/
@@ -180,7 +180,7 @@ cp .env.example .env
 # GMAIL_CLIENT_SECRET, GMAIL_TOKEN_PATH, EMAIL_TO
 ```
 
-### 4. One-time Gmail OAuth (creates token for Draft creation)
+### 4. One-time Gmail OAuth (creates token for sending email)
 ```bash
 python -c "from phase4.gmail_draft import _get_gmail_credentials; _get_gmail_credentials()"
 # Browser opens → approve → token saved to GMAIL_TOKEN_PATH
@@ -206,7 +206,7 @@ npm run dev
 3. Set **Weeks Back** (how far to look) and **Max Reviews** (how many to analyse)
 4. Click **Generate Pulse** — live progress streams in real time
 5. Review the pulse output on screen
-6. Click **Publish** to append to Google Doc + create Gmail Draft
+6. Click **Publish** to append to Google Doc + send email to `EMAIL_TO`
 
 ## Where MCP Approval Happens
 
@@ -221,7 +221,7 @@ The MCP server (`phase4/mcp_server.py`) exposes 3 tools:
 | Tool | What it does |
 |---|---|
 | `append_pulse_to_gdoc` | Appends CombinedReport to Google Doc |
-| `create_pulse_email_draft` | Creates Gmail Draft with pulse + fee section |
+| `create_pulse_email_draft` | Sends email with pulse + fee section via Gmail API |
 | `get_pipeline_status` | Returns list of cached weeks |
 
 ## Fee Scenario Covered
