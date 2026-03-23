@@ -20,9 +20,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          python -m spacy download en_core_web_sm
+        run: pip install -r requirements.txt
 
       - name: Write Google Service Account JSON
         run: |
